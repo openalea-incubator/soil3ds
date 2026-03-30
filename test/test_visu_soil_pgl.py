@@ -7,14 +7,14 @@
 # Rq: dans console pycharm, avant execution: %gui qt5
 
 import os
-from src.openalea import soil3ds
-from src.openalea.soil3ds import soil_moduleW as solW
-from src.openalea.soil3ds import soil_moduleN as solN
-from src.openalea.soil3ds.miscel_functions import slice_mask
-from src.openalea.soil3ds.soil_wrapper import pgl_representation
+from openalea import soil3ds
+from openalea.soil3ds import soil_moduleW as solW
+from openalea.soil3ds import soil_moduleN as solN
+from openalea.soil3ds.miscel_functions import slice_mask
+from openalea.soil3ds.soil_wrapper import pgl_representation
 
-from legume import initialisation # require legume package for 'init_sol_fromLpy' function
-from legume import ioxls
+from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
+from openalea.legume import ioxls
 #from soil3ds import ioxls
 
 import openalea.plantgl.all as pgl

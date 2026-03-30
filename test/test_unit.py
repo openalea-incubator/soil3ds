@@ -1,11 +1,14 @@
 
-import os
-import sys
-from src.openalea import soil3ds
+# import os
+# import sys
+import numpy as np
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of L-egume
-print(('path', path_))
-sys.path.insert(0, path_)
+from openalea.soil3ds.soil_moduleW import Soil
+from openalea.soil3ds.plt_functions import RLprof_t, vert_roots, sum3
+
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of L-egume
+# print(('path', path_))
+# sys.path.insert(0, path_)
 
 
 ################## TESTS ###############################

@@ -1,4 +1,4 @@
-from src.openalea.soil3ds import soil_moduleN as solN
+from openalea.soil3ds import soil_moduleN as solN
 
 
 

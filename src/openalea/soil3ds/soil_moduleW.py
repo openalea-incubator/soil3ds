@@ -10,7 +10,7 @@
 '''
 
 from numpy import array, multiply, divide, sum
-from src.openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
+from openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
 
 
 #from openalea.plantgl.all import *

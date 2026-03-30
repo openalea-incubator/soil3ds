@@ -1,4 +1,4 @@
-from src.openalea import soil3ds
+from openalea import soil3ds
 
 import os
 
@@ -8,8 +8,8 @@ path_leg = os.path.join(path_, 'test','inputs')#r'C:\devel\l-egume\l-egume\input
 #import ioxls
 #import RootDistrib as rtd
 
-from legume import initialisation # require legume package for 'init_sol_fromLpy' function
-from legume import ioxls
+from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
+from openalea.legume import ioxls
 
 
 

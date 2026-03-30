@@ -9,9 +9,9 @@ from rpy import r
 #sys.path.insert(0, path_)
 #sys.path.insert(0, path2_)
 
-from soil_moduleN import * #! renommer car dans nouvelle version Lpy, mot module est reserve et fait planter!
-from soil_modulevisu import *
-from ioxls import *
+from openalea.soil3ds.soil_moduleN import * #! renommer car dans nouvelle version Lpy, mot module est reserve et fait planter!
+from openalea.soil3ds.soil_modulevisu import *
+from openalea.soil3ds.ioxls import *
 
 
 

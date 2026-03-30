@@ -10,7 +10,7 @@
 '''
 
 from numpy import array, sum
-from src.openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
+from openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
 
 
 ########## diverse plant fonctions - soil water balance

@@ -6,12 +6,12 @@
 
 
 import os
-from src.openalea import soil3ds
-from src.openalea.soil3ds import soil_moduleW as solW
-from src.openalea.soil3ds import soil_moduleN as solN
+from openalea import soil3ds
+from openalea.soil3ds import soil_moduleW as solW
+from openalea.soil3ds import soil_moduleN as solN
 
-from legume import initialisation # require legume package for 'init_sol_fromLpy' function
-from legume import ioxls
+from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
+from openalea.legume import ioxls
 #from soil3ds import ioxls
 
 path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
