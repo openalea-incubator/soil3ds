@@ -3,7 +3,7 @@ from openalea.soil3ds import soil_moduleN as solN
 
 
 
-def test_init_sol(pattern8 = [[-50.,-50.], [50.,50.]], dz=5., size=[10,10,30], ):
+def test_init_sol(pattern8 = [[-50.,-50.], [50.,50.]], dz=5., size=[10,10,30]):
     """ ceation d'un sol test (manip Ashyd)"""
 
     ## sol
