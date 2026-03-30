@@ -67,7 +67,7 @@ def test_uni1():
 
         ls_transp, evapo_tot, D, state,  m_frac_transpi, m_frac_evap, ls_ftsw =  S.stepWBmc(Et0, ls_roots, ls_epsi, Precip, Irrig, state, ZESX=ZESX, leafAlbedo=0.15, U=Uval, b=0.63, FTSWThreshold=0.4, treshEffRoots=0.5, opt=1)
 
-        print(i, ls_ftsw, sum3(S.asw_t),  sum3(m_frac_evap), sum3(m_frac_transpi[0]), state)
+        # print(i, ls_ftsw, sum3(S.asw_t),  sum3(m_frac_evap), sum3(m_frac_transpi[0]), state)
 
     #    ##visu
     #    #bx = Box(Vector3(1.,1.,1.))
@@ -138,10 +138,10 @@ def test_uni2():
     #    MaScene = S2.plot_soil_properties (vals=S2.ftsw_t, MaScene=Scene(), col_scale=5)
     #    Monviewer.display(MaScene)
 
-    print((S2.ftsw_t))
-
-print("test 1")
-test_uni1()
+#     print((S2.ftsw_t))
+#
+# print("test 1")
+# test_uni1()
 
 #print("test 2")
 #test_uni2()

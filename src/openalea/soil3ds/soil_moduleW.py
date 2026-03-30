@@ -9,9 +9,12 @@
 
 '''
 
+import numpy as np
 from numpy import array, multiply, divide, sum
-from openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
+from copy import deepcopy
 
+from openalea.soil3ds.miscel_functions import sum3, mask, soil_EV_STICS
+from openalea.soil3ds.plt_functions import effective_root_lengths, Transpi_NC
 
 #from openalea.plantgl.all import *
 #import sys

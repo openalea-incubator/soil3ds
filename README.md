@@ -34,7 +34,7 @@ To run a simulation example :
 * 1. place yourself in folder `examples`
   2. run from the console:
 		```bash
-        python test_soil_coupling1.py
+        python example_soil_coupling1.py
         ```
 
 ## Contact

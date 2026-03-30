@@ -43,11 +43,11 @@ test:
     {% endfor %}
   imports:
     - openalea.soil3ds
-#  source_files:
-#    - test/**
-#  commands:
-#    - cd test
-#    - pytest -v
+  source_files:
+    - test/**
+  commands:
+    - cd test
+    - pytest -v
 
 about:
   home: {{ home }}
