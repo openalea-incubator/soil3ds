@@ -35,7 +35,7 @@ from openalea.soil3ds.miscel_functions import sum3, bEV
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -245,7 +245,7 @@ r.plot(azomes, ylab='', xlab='DOY')
 
 ##ecriture sorties
 #f = file(r'H:\simul\Valid_sol\Lusig99_profH2O_.csv', 'w')
-#iotable.ecriture_csv(profH20, f)
+#IOtable.ecriture_csv(profH20, f)
 #f.close()
 
 
@@ -274,7 +274,7 @@ r.plot(azomes, ylab='', xlab='DOY')
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -451,7 +451,7 @@ S.CloseNbalance() #-> equilibre
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -654,7 +654,7 @@ S.CloseNbalance() #-> equilibre
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -840,7 +840,7 @@ S.CloseNbalance() #-> equilibre
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'Llzsc82'#'Llzir82'#
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1008,7 +1008,7 @@ def critN (MS, a=4.8, b=-0.33):
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'Llzir82_0fix'#'Llzsc82_0fix'#'Llzsc82'#'Llzir82'#
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1183,7 +1183,7 @@ S.CloseNbalance()
 
 ##ecriture sorties
 #f = file(r'H:\simul\Valid_sol\Lusig0fix_.csv', 'w')
-#iotable.ecriture_csv(iotable.t_list([azomes,resmes,demplt]), f)
+#IOtable.ecriture_csv(IOtable.t_list([azomes,resmes,demplt]), f)
 #f.close()
 
 
@@ -1208,7 +1208,7 @@ S.CloseNbalance()
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'ASCHYD11'
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1428,7 +1428,7 @@ S.CloseWbalance()
 S.CloseNbalance()
 #fichier contenant les profils d'humidite
 #f = file(r'H:\simul\Valid_sol\out_HR.csv', 'w')
-#iotable.ecriture_csv(out_HR, f)
+#IOtable.ecriture_csv(out_HR, f)
 #f.close()
 
 
@@ -1450,7 +1450,7 @@ S.CloseNbalance()
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'ASCHYD11'
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1678,7 +1678,7 @@ S.CloseWbalance()
 S.CloseNbalance()
 #fichier contenant les profils d'humidite
 #f = file(r'H:\simul\Valid_sol\out_HR2.csv', 'w')
-#iotable.ecriture_csv(out_HR, f)
+#IOtable.ecriture_csv(out_HR, f)
 #f.close()
 
 
@@ -1699,7 +1699,7 @@ S.CloseNbalance()
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'ASCHYD11'
 met = xlrd.open_workbook(meteo_path)
-meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 

@@ -45,8 +45,8 @@ ongletBatch = 'exemple'
 IDusm = 1711
 
 usms_path = os.path.join(path_, foldin, fxls)
-usms = ioxls.xlrd.open_workbook(usms_path)
-ls_usms = iotable.conv_dataframe(ioxls.get_xls_col(usms.sheet_by_name(ongletBatch)))
+usms = IOxls.xlrd.open_workbook(usms_path)
+ls_usms = IOtable.conv_dataframe(IOxls.get_xls_col(usms.sheet_by_name(ongletBatch)))
 ls_usms['ID_usm'] = list(map(int, ls_usms['ID_usm']))
 id = ls_usms['ID_usm'].index(IDusm)
 #mylsys = runl.lsystemInputOutput_usm(fxls, foldin=foldin, ongletBatch=ongletBatch, i=id, path_OUT=foldout)
@@ -67,16 +67,16 @@ path_met = os.path.join(path_,foldin,fxls_Met)
 path_mng = os.path.join(path_,foldin,fxls_mng)
 path_plante = os.path.join(path_,foldin,fxls_Plt)
 
-par_SN, par_sol = ioxls.read_sol_param(path_sol, ongletS)
-inis = ioxls.read_plant_param(path_inis, ongletIn)
-met = ioxls.read_met_file(path_met, ongletMet)
-mng = ioxls.read_met_file(path_mng, ongletMn)
+par_SN, par_sol = IOxls.read_sol_param(path_sol, ongletS)
+inis = IOxls.read_plant_param(path_inis, ongletIn)
+met = IOxls.read_met_file(path_met, ongletMet)
+mng = IOxls.read_met_file(path_mng, ongletMn)
 
 
 #meteo / mng journalier
 DOY = 50 #DOYdeb
-meteo_j = ioxls.extract_dataframe(met, ['TmoyDay','RG','Et0','Precip','Tmin','Tmax','Tsol'], 'DOY', val=DOY)
-mng_j = ioxls.extract_dataframe(mng, ['Coupe','Irrig', 'FertNO3','FertNH4','Hcut'], 'DOY', val=DOY)
+meteo_j = IOxls.extract_dataframe(met, ['TmoyDay','RG','Et0','Precip','Tmin','Tmax','Tsol'], 'DOY', val=DOY)
+mng_j = IOxls.extract_dataframe(mng, ['Coupe','Irrig', 'FertNO3','FertNH4','Hcut'], 'DOY', val=DOY)
 for k in list(meteo_j.keys()): meteo_j[k] = meteo_j[k][0]
 for k in list(mng_j.keys()): mng_j[k] = mng_j[k][0]
 
@@ -135,7 +135,7 @@ for i in range(nb_plt):
 
 
 #lecture parametre plante ParamP utilise dans les calculs du sol
-g4 = ioxls.read_plant_param(path_plante, ongletP)
+g4 = IOxls.read_plant_param(path_plante, ongletP)
 ParamP = [g4]*nb_plt
 #utilise pourquoi / quel param precisement utilise dans le sol? -> revoir pour rendre explicite
 
@@ -144,8 +144,8 @@ ParamP = [g4]*nb_plt
 n_jour = 100
 for j in range(n_jour):
     DOY+=1
-    meteo_j = ioxls.extract_dataframe(met, ['TmoyDay', 'RG', 'Et0', 'Precip', 'Tmin', 'Tmax', 'Tsol'], 'DOY', val=DOY)
-    mng_j = ioxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
+    meteo_j = IOxls.extract_dataframe(met, ['TmoyDay', 'RG', 'Et0', 'Precip', 'Tmin', 'Tmax', 'Tsol'], 'DOY', val=DOY)
+    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
     for k in list(meteo_j.keys()): meteo_j[k] = meteo_j[k][0]
     for k in list(mng_j.keys()): mng_j[k] = mng_j[k][0]
 

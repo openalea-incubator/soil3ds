@@ -14,8 +14,8 @@ from openalea.soil3ds.miscel_functions import slice_mask
 from openalea.soil3ds.soil_wrapper import pgl_representation
 
 from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
-from openalea.legume import ioxls
-#from soil3ds import ioxls
+from openalea.legume import IOxls
+#from soil3ds import IOxls
 
 import openalea.plantgl.all as pgl
 
@@ -32,16 +32,16 @@ def critN(MS, a=4.8, b=-0.33):
 ## 1) lecture fichier initialisation
 meteo_path = os.path.join(path_leg, 'meteo_exemple.xls')  # 'meteo_exemple_debugL_gl.xls')#r'H:\devel\grassland\grassland\L-gume\meteo_exemple2.xls'
 ongletM = 'Lusignan30'  # 'Lusignan302ans'#'DivLeg15'#'morpholeg15'#'combileg15'#'combileg16'#'Avignon30'#'exemple'#'morpholeg15'#'testJLD'#'competiluz'#
-meteo = ioxls.read_met_file(meteo_path, ongletM)
+meteo = IOxls.read_met_file(meteo_path, ongletM)
 
 ## lecture fichier management
 mn_path = os.path.join(path_leg, 'management_exemple.xls')  # 'management_exemple3_debugL_gl.xls')#r'H:\devel\grassland\grassland\L-gume\management_exemple.xls'
 ongletMn = 'Lusignan30IrrN2'  # 'Lusignan30IrrN2ans'#'DivLeg15'#'Lusignan30IrrN'#'illimite-sanscoupe'#'combileg15-irrigajusteeLUZTVMIN'#'combileg16-irrigajusteeMIN'#'Lusignan30'#'Avignon30IrrN'#'Avignon30'#
-mng = ioxls.read_met_file(mn_path, ongletMn)
+mng = IOxls.read_met_file(mn_path, ongletMn)
 
 # inis_path = os.path.join(path_leg, 'Init_sol_exemple.xls')  # 'Initialisation_sol_exemple.xls')
 # ongletIn = 'Lusignan30'#'Lusignan30_1'  #
-# inis = ioxls.read_plant_param(inis_path, ongletIn)
+# inis = IOxls.read_plant_param(inis_path, ongletIn)
 
 # lecture des parametres du sol et plante par defaut
 par_sol = solW.default_par_sol()
@@ -83,7 +83,7 @@ opt_Nuptake = 0 #2 #0 # #option for plant N uptake calculation
 DOY_deb, DOY_fin = 100, 300  # 239,623
 
 # initialisation sol
-meteo_j = ioxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY_deb)
+meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY_deb)
 
 S = solN.SoilN(par_sol, par_SN, soil_number=vsoilnumbers,
                    dxyz=[[Lsol / discret_solXY[0]] * discret_solXY[0], [largsol / discret_solXY[1]] * discret_solXY[1],
@@ -120,9 +120,9 @@ cumET0, cumNplt = [], []
 for DOY in range(DOY_deb, DOY_fin):
 
     # MAJ meteo / mng
-    # meteo_j = ioxls.extract_dataframe(meteo, ['TmoyDay','I0','Et0','Precip','Irrig','Coupe','FertNO3','FertNH4','Tsol'], 'DOY', val=DOY)
-    meteo_j = ioxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY)
-    mng_j = ioxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
+    # meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay','I0','Et0','Precip','Irrig','Coupe','FertNO3','FertNH4','Tsol'], 'DOY', val=DOY)
+    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY)
+    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
     print(DOY)
     for k in list(meteo_j.keys()): meteo_j[k] = meteo_j[k][0]
     for k in list(mng_j.keys()): mng_j[k] = mng_j[k][0]
