@@ -11,7 +11,7 @@ from rpy import r
 
 from soil_moduleN import * #! renommer car dans nouvelle version Lpy, mot module est reserve et fait planter!
 from soil_modulevisu import *
-from IOxls import *
+from ioxls import *
 
 
 
@@ -28,7 +28,7 @@ from IOxls import *
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -145,7 +145,7 @@ intialWC = sum3(S.tsw_t)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -238,7 +238,7 @@ r.plot(azomes, ylab='', xlab='DOY')
 
 ##ecriture sorties
 #f = file(r'H:\simul\Valid_sol\Lusig99_profH2O_.csv', 'w')
-#IOtable.ecriture_csv(profH20, f)
+#iotable.ecriture_csv(profH20, f)
 #f.close()
 
 
@@ -267,7 +267,7 @@ r.plot(azomes, ylab='', xlab='DOY')
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -367,7 +367,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -444,7 +444,7 @@ S.CloseNbalance() #-> equilibre
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -553,7 +553,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation
@@ -647,7 +647,7 @@ S.CloseNbalance() #-> equilibre
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'SolNu_Lusig99'#'testSolNu'#'exemple'#'competiluz'#
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -759,7 +759,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -833,7 +833,7 @@ S.CloseNbalance() #-> equilibre
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'Llzsc82'#'Llzir82'#
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -925,7 +925,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation
@@ -1001,7 +1001,7 @@ def critN (MS, a=4.8, b=-0.33):
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'Llzir82_0fix'#'Llzsc82_0fix'#'Llzsc82'#'Llzir82'#
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1104,7 +1104,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation
@@ -1176,7 +1176,7 @@ S.CloseNbalance()
 
 ##ecriture sorties
 #f = file(r'H:\simul\Valid_sol\Lusig0fix_.csv', 'w')
-#IOtable.ecriture_csv(IOtable.t_list([azomes,resmes,demplt]), f)
+#iotable.ecriture_csv(iotable.t_list([azomes,resmes,demplt]), f)
 #f.close()
 
 
@@ -1201,7 +1201,7 @@ S.CloseNbalance()
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'ASCHYD11'
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1308,7 +1308,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -1421,7 +1421,7 @@ S.CloseWbalance()
 S.CloseNbalance()
 #fichier contenant les profils d'humidite
 #f = file(r'H:\simul\Valid_sol\out_HR.csv', 'w')
-#IOtable.ecriture_csv(out_HR, f)
+#iotable.ecriture_csv(out_HR, f)
 #f.close()
 
 
@@ -1443,7 +1443,7 @@ S.CloseNbalance()
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'ASCHYD11'
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1550,7 +1550,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -1671,7 +1671,7 @@ S.CloseWbalance()
 S.CloseNbalance()
 #fichier contenant les profils d'humidite
 #f = file(r'H:\simul\Valid_sol\out_HR2.csv', 'w')
-#IOtable.ecriture_csv(out_HR, f)
+#iotable.ecriture_csv(out_HR, f)
 #f.close()
 
 
@@ -1692,7 +1692,7 @@ S.CloseNbalance()
 meteo_path = r'H:\Travail\devel\grassland\grassland\L-gume\meteo_exemple.xls'
 ongletM = 'ASCHYD11'
 met = xlrd.open_workbook(meteo_path)
-meteo = IOtable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
+meteo = iotable.conv_dataframe(get_xls_col(met.sheet_by_name(ongletM)))
 for k in ['year', 'month', 'day', 'DOY','Coupe']: meteo[k] = list(map(int, meteo[k]))
 
 
@@ -1811,7 +1811,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation

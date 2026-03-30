@@ -13,8 +13,8 @@ from src.openalea.soil3ds import soil_moduleN as solN
 
 
 import numpy as np
-import IOxls
-import IOtable
+import ioxls
+import iotable
 
 
 
@@ -33,7 +33,7 @@ fxls_sol = 'Parametres_sol_exemple.xls'
 ongletS = 'lusignan99'
 
 path_sol = os.path.join(path_,foldin,fxls_sol)
-par_SN, par_sol = IOxls.read_sol_param(path_sol, ongletS)
+par_SN, par_sol = ioxls.read_sol_param(path_sol, ongletS)
 
 # initialisation taille scene / discretisation (1D - homogene pour ttes les couches)
 cote = 100 #cm
@@ -100,7 +100,7 @@ for i in range(nb_plt):
 #lecture parametre plante ParamP utilise dans les calculs du sol
 path_plante = os.path.join(path_,foldin,'Parametres_plante_exemple.xls')#'Parametres_plante_v5cLucas.xls')#'Parametres_plante_v18.xls')#'Parametres_plante_v9Lucas_debugL.xls')#r'H:\devel\grassland\grassland\L-gume\Parametres_plante_v5cLucas.xls'
 ongletP = 'Fix2'
-g4 = IOxls.read_plant_param(path_plante, ongletP)
+g4 = ioxls.read_plant_param(path_plante, ongletP)
 ParamP = [g4]*nb_plt
 #utilise pourquoi / quel param precisement utilise dans le sol? -> revoir pour rendre explicite
 
