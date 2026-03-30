@@ -3,19 +3,17 @@
 # choix : ongletIn = 'Lusignan30_1' # pour sol avec 1 unique voxel/compartiment
 # choix : ongletIn = 'Lusignan30' # pour sol avec 30 voxels verticaux
 #############
-
-
 import os
-from openalea import soil3ds
+
+from numpy import mean
+
+from openalea.legume import IOxls
+
 from openalea.soil3ds import soil_moduleW as solW
 from openalea.soil3ds import soil_moduleN as solN
 
-from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
-from openalea.legume import IOxls
-#from soil3ds import IOxls
-
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
-path_leg = os.path.join(path_, 'test', 'inputs')
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
+path_leg = 'inputs' #os.path.join(path_, 'test', 'inputs')
 
 
 def critN(MS, a=4.8, b=-0.33):
@@ -77,7 +75,7 @@ opt_Nuptake = 1 #2 #0 # #option for plant N uptake calculation
 DOY_deb, DOY_fin = 100, 300  # 239,623
 
 # initialisation sol
-meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY_deb)
+meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol', 'DOY'], 'DOY', val=DOY_deb)
 
 S = solN.SoilN(par_sol, par_SN, soil_number=vsoilnumbers,
                    dxyz=[[Lsol / discret_solXY[0]] * discret_solXY[0], [largsol / discret_solXY[1]] * discret_solXY[1],
@@ -115,8 +113,8 @@ for DOY in range(DOY_deb, DOY_fin):
 
     # MAJ meteo / mng
     # meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay','I0','Et0','Precip','Irrig','Coupe','FertNO3','FertNH4','Tsol'], 'DOY', val=DOY)
-    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY)
-    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
+    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol', 'DOY'], 'DOY', val=DOY)
+    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut', 'DOY'], 'DOY', val=DOY)
     print(DOY)
     for k in list(meteo_j.keys()): meteo_j[k] = meteo_j[k][0]
     for k in list(mng_j.keys()): mng_j[k] = mng_j[k][0]

@@ -6,15 +6,15 @@
 
 
 import os
-from openalea import soil3ds
-from openalea.soil3ds import soil_moduleN as solN
 
 from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
 from openalea.legume import IOxls
-#from soil3ds import IOxls
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
-path_leg = os.path.join(path_, 'test', 'inputs')
+# from openalea import soil3ds
+from openalea.soil3ds import soil_moduleN as solN
+
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
+path_leg = 'inputs' #os.path.join(path_, 'test', 'inputs')
 
 
 ## 1) lecture fichier initialisation
@@ -81,8 +81,8 @@ for DOY in range(DOY_deb, DOY_fin):
 
     # MAJ meteo / mng
     # meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay','I0','Et0','Precip','Irrig','Coupe','FertNO3','FertNH4','Tsol'], 'DOY', val=DOY)
-    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY)
-    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
+    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol', 'DOY'], 'DOY', val=DOY)
+    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut', 'DOY'], 'DOY', val=DOY)
     print(DOY)
     for k in list(meteo_j.keys()): meteo_j[k] = meteo_j[k][0]
     for k in list(mng_j.keys()): mng_j[k] = mng_j[k][0]
