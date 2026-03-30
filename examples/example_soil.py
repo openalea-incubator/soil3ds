@@ -1,17 +1,12 @@
-from openalea import soil3ds
-
 import os
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))#path ou trouver les inputs
-path_leg = os.path.join(path_, 'test','inputs')#r'C:\devel\l-egume\l-egume\input'#r'C:\devel\grassland'#r'H:\devel\grassland\grassland\L-gume' #r'C:\devel\grassland'
-
-#import IOxls
-#import RootDistrib as rtd
+from openalea import soil3ds
 
 from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
 from openalea.legume import IOxls
 
-
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))#path ou trouver les inputs
+path_leg = 'inputs' #os.path.join(path_, 'test','inputs')#r'C:\devel\l-egume\l-egume\input'#r'C:\devel\grassland'#r'H:\devel\grassland\grassland\L-gume' #r'C:\devel\grassland'
 
 
 ## 1) lecture fichier initialisation
