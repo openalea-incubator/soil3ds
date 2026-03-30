@@ -24,7 +24,7 @@ import os # pour lecture XML
 import xml.etree.ElementTree as ET # pour lecture XML
 import numpy as np
 
-from numpy import array, multiply, divide
+from numpy import array, multiply, divide, sum
 
 from copy import deepcopy
 

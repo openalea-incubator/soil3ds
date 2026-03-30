@@ -20,9 +20,9 @@ from openalea.legume import IOxls
 import openalea.plantgl.all as pgl
 
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
-path_leg = os.path.join(path_, 'test', 'inputs')
-
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
+# path_leg = os.path.join(path_, 'examples', 'inputs')
+path_leg = 'inputs' #os.path.join('examples', 'inputs')
 
 def critN(MS, a=4.8, b=-0.33):
     """ courbe critique de dilution de l'N """
@@ -121,8 +121,8 @@ for DOY in range(DOY_deb, DOY_fin):
 
     # MAJ meteo / mng
     # meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay','I0','Et0','Precip','Irrig','Coupe','FertNO3','FertNH4','Tsol'], 'DOY', val=DOY)
-    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol'], 'DOY', val=DOY)
-    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut'], 'DOY', val=DOY)
+    meteo_j = IOxls.extract_dataframe(meteo, ['TmoyDay', 'I0', 'Et0', 'Precip', 'Tsol', 'DOY'], 'DOY', val=DOY)
+    mng_j = IOxls.extract_dataframe(mng, ['Coupe', 'Irrig', 'FertNO3', 'FertNH4', 'Hcut', 'DOY'], 'DOY', val=DOY)
     print(DOY)
     for k in list(meteo_j.keys()): meteo_j[k] = meteo_j[k][0]
     for k in list(mng_j.keys()): mng_j[k] = mng_j[k][0]
@@ -143,7 +143,7 @@ for DOY in range(DOY_deb, DOY_fin):
     if opt_Nuptake == 0 or opt_Nuptake == 2:
         PotN = MSa * critN(MSa) / 100. * 1000  # kg N.ha-1
         demande_N_plt = max(PotN - QN, 0.)  # kg N.ha-1
-        ls_N = [sum(demande_N_plt) / 10000.]  # kg N.plt-1 surface de sol
+        ls_N = [demande_N_plt / 10000.]  # kg N.plt-1 surface de sol
     elif opt_Nuptake == 1:
         ls_N = [0.6]
 
