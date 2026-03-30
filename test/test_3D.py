@@ -4,9 +4,9 @@
 #############
 
 import os
-import soil3ds
-from soil3ds import soil_moduleN as solN
-from soil3ds import soil_wrapper as soil_interface
+from src.openalea import soil3ds
+from src.openalea.soil3ds import soil_moduleN as solN
+from src.openalea.soil3ds import soil_wrapper as soil_interface
 
 import openalea.lpy as lpy
 

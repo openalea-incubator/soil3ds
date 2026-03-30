@@ -3,14 +3,13 @@
 import os
 import sys
 
-
-import soil3ds
+from src.openalea import soil3ds
 
 path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of soil3ds
 print(('path', path_))
 sys.path.insert(0, path_)
 
-from soil3ds import soil_moduleN as solN
+from src.openalea.soil3ds import soil_moduleN as solN
 
 
 import numpy as np

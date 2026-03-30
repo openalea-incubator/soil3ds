@@ -5,9 +5,7 @@
 #############
 
 import os
-import soil3ds
-from soil3ds import soil_moduleN as solN
-from scipy import *
+from src.openalea import soil3ds
 
 from legume import initialisation # require legume package for 'init_sol_fromLpy' function
 from legume import IOxls

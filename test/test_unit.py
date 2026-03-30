@@ -1,12 +1,12 @@
 
 import os
 import sys
-import soil3ds
+from src.openalea import soil3ds
+
 path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of L-egume
 print(('path', path_))
 sys.path.insert(0, path_)
 
-from soil3ds.soil_moduleW import * #soil3ds installe comme module
 
 ################## TESTS ###############################
 

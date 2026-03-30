@@ -31,7 +31,7 @@ ez_setup.use_setuptools()
 import sys, os
 from setuptools import setup, find_packages
 
-import soil3ds
+from src.openalea import soil3ds
 
 if sys.version_info < (2, 7):
     print('ERROR: lgrass requires at least Python 2.7 to run.')

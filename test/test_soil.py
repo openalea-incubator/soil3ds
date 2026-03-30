@@ -1,7 +1,4 @@
-
-from scipy import *
-from soil3ds import soil_moduleN as solN
-import soil3ds
+from src.openalea import soil3ds
 
 import os
 

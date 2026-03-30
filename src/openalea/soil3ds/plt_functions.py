@@ -9,11 +9,8 @@
 
 '''
 
-
-import numpy as np
-from numpy import array, multiply, divide, sum
-from copy import deepcopy
-from soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
+from numpy import array, sum
+from src.openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
 
 
 ########## diverse plant fonctions - soil water balance
