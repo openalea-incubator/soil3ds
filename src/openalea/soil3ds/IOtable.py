@@ -1,6 +1,6 @@
 from os.path import join
 
-def n_lignes (fichier) :
+def N_lignes (fichier) :
     """compte le nombre de lignes d'un fichier (compte le nombre d'elements de la liste readlines()"""
 
     position_ini = fichier.tell()

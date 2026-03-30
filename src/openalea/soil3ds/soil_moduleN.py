@@ -22,6 +22,18 @@
 
 import os # pour lecture XML
 import xml.etree.ElementTree as ET # pour lecture XML
+import numpy as np
+
+from numpy import array, multiply, divide
+
+from copy import deepcopy
+
+from openalea.soil3ds.soil_moduleW import Soil, default_par_sol
+from openalea.soil3ds.plt_functions import (
+    mask, sum3, bEV,
+    Distrib_Potential_Nuptake_Plt, Actual_Nuptake_plt,
+    Distrib_Potential_Nuptake_Plt_Bis, Actual_Nuptake_plt_Bis,
+    Distrib_Potential_Nuptake_Plt_old, Actual_Nuptake_plt_old)
 
 class SoilN(Soil):
     """ Main class for the soilN object of the 'soil3ds' model

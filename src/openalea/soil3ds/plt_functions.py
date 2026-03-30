@@ -10,6 +10,8 @@
 '''
 
 from numpy import array, sum
+from copy import deepcopy
+
 from openalea.soil3ds.miscel_functions import * #soil3ds miscellaneous soil functions
 
 
