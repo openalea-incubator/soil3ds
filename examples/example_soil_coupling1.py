@@ -5,7 +5,7 @@ import sys
 
 from openalea import soil3ds
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of soil3ds
+path_ = '' #os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of soil3ds
 print(('path', path_))
 sys.path.insert(0, path_)
 
@@ -27,7 +27,7 @@ from openalea.soil3ds import IOxls
 # personalisation des initialisations (sol personnalise / creation solN)
 # loop de 100 jours avec option 'Local Transporter' pour plant uptake
 
-foldin =  os.path.join(path_, 'test','inputs')
+foldin =  os.path.join(path_, 'inputs')
 fxls_sol = 'Parametres_sol_exemple.xls'
 ongletS = 'lusignan99'
 
@@ -107,7 +107,7 @@ ParamP = [g4]*nb_plt
 ######### loop pour n_jour
 n_jour = 100
 for j in range(n_jour):
-    meteo_j = {'TmoyDay': 11., 'RG': 846.7, 'Et0': 2.0, 'Precip': 0., 'Tmin': '', 'Tmax': '', 'Tsol': 10., 'I0': 47.04, 'durjour': 10.88}
+    meteo_j = {'TmoyDay': 11., 'RG': 846.7, 'Et0': 2.0, 'Precip': 0., 'Tmin': '', 'Tmax': '', 'Tsol': 10., 'I0': 47.04, 'durjour': 10.88, 'DOY': j}
     mng_j = {'Coupe': 0.0, 'Irrig': 0.0, 'FertNO3': 0.0, 'FertNH4': 0.0, 'Hcut': 3.0, 'ForceNNI': 1.0}
 
     # Step Sol avec les inputs prevues dans VGL
