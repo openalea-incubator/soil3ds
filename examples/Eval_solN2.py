@@ -1,4 +1,7 @@
-from scipy import *
+import xlrd
+
+from numpy import *
+
 from rpy_options import set_options
 set_options(RHOME='c:/progra~1/R/R-2.12.1')
 from rpy import r
@@ -11,7 +14,11 @@ from rpy import r
 
 from openalea.soil3ds.soil_moduleN import * #! renommer car dans nouvelle version Lpy, mot module est reserve et fait planter!
 from openalea.soil3ds.soil_modulevisu import *
-from openalea.soil3ds.ioxls import *
+from openalea.soil3ds.IOxls import get_xls_col, get_xls_row
+from openalea.soil3ds import IOtable
+from openalea.soil3ds.IOxls import extract_dataframe
+from openalea.soil3ds.plt_functions import vert_roots
+from openalea.soil3ds.miscel_functions import sum3, bEV
 
 
 
@@ -145,7 +152,7 @@ intialWC = sum3(S.tsw_t)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -367,7 +374,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -553,7 +560,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation
@@ -759,7 +766,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -925,7 +932,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation
@@ -1104,7 +1111,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation
@@ -1308,7 +1315,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -1550,7 +1557,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 
@@ -1811,7 +1818,7 @@ S.init_asw(HRp_init=HRpinit)
 
 Uval = q0*0.1*sum(S.m_QH20fc[0])*surfsolref / (S.dxyz[2][0]*100.)#(epaisseur de sol (cm)* mm d'eau dans 1cm) #U quantite d'eau dans une couche superieure en mm (5 par default)
 stateEV = [0.,0.,0.] #pour le calcul de l'evaporation du sol (memoire du cumul evapore depuis derniere PI)
-b= bev(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
+b= bEV(ACLIMc, ARGIs, HXs=0.261)#1.#valeur empirique tres proche#0.1#0.63#0.63
 
 
 #debut, fin de simulation

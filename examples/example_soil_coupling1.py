@@ -13,7 +13,7 @@ from openalea.soil3ds import soil_moduleN as solN
 
 
 import numpy as np
-from openalea.soil3ds import ioxls
+from openalea.soil3ds import IOxls
 
 
 

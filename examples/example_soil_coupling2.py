@@ -14,8 +14,8 @@ sys.path.insert(0, path_)
 
 import numpy as np
 
-from openalea.soil3ds import ioxls
-from openalea.soil3ds import iotable
+from openalea.soil3ds import IOxls
+from openalea.soil3ds import IOtable
 import openalea.legume.run_legume_usm as runl
 import openalea.legume.initialisation as initial
 import openalea.legume.RootDistrib as rtd
