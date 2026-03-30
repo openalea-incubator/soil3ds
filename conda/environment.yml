@@ -1,0 +1,8 @@
+name: soil3ds_dev
+channels:
+  - openalea3
+  - conda-forge
+dependencies:
+  - python
+  - pip:
+      - -e .."[doc, test]"
