@@ -5,13 +5,14 @@ import numpy as np
 
 from openalea.soil3ds.soil_moduleW import Soil
 from openalea.soil3ds.plt_functions import RLprof_t, vert_roots, sum3
-
-# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # local absolute path of L-egume
-# print(('path', path_))
-# sys.path.insert(0, path_)
-
+from openalea.soil3ds.soil_wrapper import Soil3D_wrapper
 
 ################## TESTS ###############################
+
+def Soil3D_wrapper():
+    S = Soil3D_wrapper()
+
+    assert S.maxdimension == 3
 
 def test_uni1():
     """
