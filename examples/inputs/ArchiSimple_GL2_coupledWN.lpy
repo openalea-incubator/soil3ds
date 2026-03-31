@@ -4,7 +4,7 @@
 ## couplage pour 1 seule entite de racine (1 plante ou toutes les plantes ensemble)
 
 
-from openalea.plantgl.all import * 
+from openalea.plantgl.all import *
 from openalea.mtg.io import *
 from openalea.mtg.aml import *
 import random
@@ -16,6 +16,7 @@ import sys
 import csv
 import os
 import pandas as pd
+from pathlib import Path
 
 from openalea.soil3ds import soil_moduleN as solN
 #from openalea.soil3ds.test.test_init_soil import init_sol_test
@@ -104,7 +105,7 @@ PLOT_PROPERTY = 'ftsw_t'#'m_NO3'#'root_length' # (-1 pour pas de grille sol)
 ################
 
 
-path_leg = 'inputs'
+path_leg = Path("inputs")
 
 path_plante = os.path.join(path_leg,'param_root.xls')
 ongletP = 'sevanskij'#'leo'#'canto'#'formica'#'timbale'#'giga'#'canto'#'kayanne'#
@@ -196,7 +197,7 @@ def initiatisation_soil_default(pattern8, dz, size, stateEV, properties_3ds):
   # lecture parametre N par defaut
   par_SN = solN.default_parSN()
   
-  ## creation d'un objet sol 3ds par defaut (S)
+  ## create default 3D soil object (S)
   S = test_init_sol(pattern8, dz, size)
   #print('surfsol',S.surfsolref) #-> c'est bien un objet sol de la bonne surface qui est cree 
   
