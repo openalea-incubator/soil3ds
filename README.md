@@ -1,6 +1,4 @@
-====================================
-README for '3DS soil model' (soil3ds)
-====================================
+# 3DS soil model (soil3ds)
 
 This is '3DS soil model' (soil3ds), a 3D Soil model of soil for water and N balances adapted from the STICS soil module.
 
@@ -11,61 +9,35 @@ See
 - Lebon, E., Dumas, V., Pieri, P., & Schultz, H. R. (2003). Modelling the seasonal dynamics of the soil water balance of vineyards. Functional Plant Biology, 30(6), 699-710.
 
 
-## 1. Getting Started
+### Installation
 
-These instructions will get you a copy of *soil3ds* up and running on your local 
-machine.
+First, **Conda** needs to be installed, see instruction on [openaleala documentation](https://openalea.readthedocs.io/en/latest/install.html).
 
-### 1.1 Prerequisites
+#### for user
+Creating a new conda environment with soil3ds and its dependencies installed
+```bash
+mamba create -n soil3ds -c openalea3 -c openalea3 -c conda-forge openalea.soil3ds
+```
 
-To install and use *soil3ds*, you need first to install the dependencies.
+#### for developer
+```bash
+mamba env create -f ./conda/environment.yml
+```
+This will create a conda environment with dependencies installed and install soil3ds in editable state.
 
-*soil3ds* has been tested on Windows.
- 
-#### 1.1.1 Install the dependencies on Windows 10 64 bit
-1) Create a conda environment with miniconda3
-    ```bash
-    conda create -n myenvname python=3.7 xlrd=2.0.1 numpy=1.20.3 scipy=1.7.3 pandas=1.3.4
-    ```
-
-2) Place yourself in the created environment  : `conda activate myenvname`
-
-3) Install *soil3ds*
-    1) Git console :
-        ```bash
-        git clone https://github.com/glouarn/soil3ds.git
-        ```
-    2) installation in the conda environment (in folder `soil3ds`)
-        ```bash
-        python setup.py develop
-        ```
-
-
-### 1.3 Running
+### Examples
 
 To run a simulation example :
 
-* 1. place yourself in folder `soil3ds/test`
+  1. place yourself in folder `examples`
   2. run from the console:
 		```bash
-        python test_soil_coupling1.py
+        python example_3D.py
         ```
-
-
-## 2. Reading the docs
-
-To build the user and reference guides:
-
-
-## 3. Testing
-
-The test allows to verify that the model implementation accurately 
-represents the developer’s conceptual description of the model and its solution.
-
 
 ## Contact
 
-For any question, send an email to <gaetan.louarn@inrae.fr>.
+For further assistance, you can reach out to the development team creating an [issue on github](https://github.com/openalea-incubator/soil3ds/issues)
 
 ## Authors
 

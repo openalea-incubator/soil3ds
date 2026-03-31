@@ -4,14 +4,15 @@
 #############
 
 import os
-import soil3ds
-from soil3ds import soil_moduleN as solN
-from soil3ds import soil_wrapper as soil_interface
 
 import openalea.lpy as lpy
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
-path_leg = os.path.join(path_, 'test')
+# from openalea import soil3ds
+from openalea.soil3ds import soil_moduleN as solN
+from openalea.soil3ds import soil_wrapper as soil_interface
+
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
+path_leg = 'inputs'  #os.path.join(path_, 'test')
 
 
 
@@ -19,8 +20,7 @@ path_leg = os.path.join(path_, 'test')
 # Run de Archisimple avec un couplage interne a soil3DS dans le EndEach (eau et N: step_bilanWN_solVGL)
 # couplage pas a tous les steps: seulement 1 fois par jour!
 
-
-nomlsystem = 'ArchiSimple GL2_coupledWN.lpy'
+nomlsystem = 'ArchiSimple_GL2_coupledWN.lpy'
 lsysR = lpy.Lsystem(os.path.join(path_leg, nomlsystem))
 # print(lsysR)
 
@@ -56,7 +56,7 @@ for i in range(nb_iter + 1):
 
         # update daily variables
         ls_epsi = [epsi[j]]
-        meteo_j = {'Et0': Et0[j], 'Precip': Rain[j], 'Tsol': Tsol[j]}
+        meteo_j = {'Et0': Et0[j], 'Precip': Rain[j], 'Tsol': Tsol[j], 'DOY': TTdays[j]}
         mng_j = {'Irrig': Irrig[j], 'FertNO3': FertNO3[j], 'FertNH4': FertNH4[j]}
 
         # step water et N balance avec 1 seule entite (ls_roots et epsi)

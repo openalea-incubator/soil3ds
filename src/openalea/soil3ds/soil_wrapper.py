@@ -64,7 +64,7 @@ class Soil3D_wrapper(object):
     def properties(self):
         return self.m
 
-    def add_property(self, name, default_value = 1, type=np.float):
+    def add_property(self, name, default_value = 1, type=np.float64):
         try :
             assert default_value.shape == self.size
             self.m[name] = default_value

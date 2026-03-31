@@ -1,11 +1,9 @@
-
-from scipy import *
-from soil3ds import soil_moduleN as solN
+from openalea.soil3ds import soil_moduleN as solN
 
 
 
 
-def init_sol_test(pattern8 = [[-50.,-50.], [50.,50.]], dz=5., size=[10,10,30], ):
+def test_init_sol(pattern8 = [[-50.,-50.], [50.,50.]], dz=5., size=[10,10,30]):
     """ ceation d'un sol test (manip Ashyd)"""
 
     ## sol
@@ -92,7 +90,8 @@ def init_sol_test(pattern8 = [[-50.,-50.], [50.,50.]], dz=5., size=[10,10,30], )
     S = solN.SoilN(par_sol, par_SN, soil_number = vsoilnumbers, dxyz = [[Lsol/size[0]]*size[0], [largsol/size[1]]*size[1], [dz_sol]*ncouches_sol], vDA=vDA, vCN=vCN,vMO=vMO, vARGIs = vARGIs,vNO3=vNO3,vNH4=vNH4, vCALCs=vCALCs, Tsol=Tsol, obstarac=None, pattern8=pattern8)
     S.init_asw(HRp_init=HRpinit)
 
-    return S
+    assert S.pattern == [[-50.0, -50.0], [50.0, 50.0]]
+    assert S.pHeau == 7.1
 
 
 

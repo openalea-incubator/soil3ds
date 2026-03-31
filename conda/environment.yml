@@ -1,0 +1,9 @@
+name: soil3ds_dev
+channels:
+  - openalea3
+  - conda-forge
+dependencies:
+  - python
+  - matplotlib-base
+  - pip:
+      - -e .."[doc, test]"

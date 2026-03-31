@@ -1,4 +1,7 @@
-from scipy import *
+import xlrd
+
+from numpy import *
+
 from rpy_options import set_options
 set_options(RHOME='c:/progra~1/R/R-2.12.1')
 from rpy import r
@@ -9,9 +12,13 @@ from rpy import r
 #sys.path.insert(0, path_)
 #sys.path.insert(0, path2_)
 
-from soil_moduleN import * #! renommer car dans nouvelle version Lpy, mot module est reserve et fait planter!
-from soil_modulevisu import *
-from IOxls import *
+from openalea.soil3ds.soil_moduleN import * #! renommer car dans nouvelle version Lpy, mot module est reserve et fait planter!
+from openalea.soil3ds.soil_modulevisu import *
+from openalea.soil3ds.IOxls import get_xls_col, get_xls_row
+from openalea.soil3ds import IOtable
+from openalea.soil3ds.IOxls import extract_dataframe
+from openalea.soil3ds.plt_functions import vert_roots
+from openalea.soil3ds.miscel_functions import sum3, bEV
 
 
 

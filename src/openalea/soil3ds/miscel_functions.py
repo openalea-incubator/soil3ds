@@ -12,7 +12,7 @@
 
 
 import numpy as np
-from copy import deepcopy
+# from copy import deepcopy
 
 
 ########## fonctions diverses matrice sol 3D

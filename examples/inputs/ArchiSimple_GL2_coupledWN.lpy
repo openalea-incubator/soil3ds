@@ -4,7 +4,7 @@
 ## couplage pour 1 seule entite de racine (1 plante ou toutes les plantes ensemble)
 
 
-from openalea.plantgl.all import * 
+from openalea.plantgl.all import *
 from openalea.mtg.io import *
 from openalea.mtg.aml import *
 import random
@@ -16,24 +16,73 @@ import sys
 import csv
 import os
 import pandas as pd
+from pathlib import Path
 
-from soil3ds import soil_moduleN as solN
-from soil3ds.test.test_init_soil import init_sol_test
-from soil3ds import IOxls
-from soil3ds import IOtable
+from openalea.soil3ds import soil_moduleN as solN
+#from openalea.soil3ds.test.test_init_soil import init_sol_test
+#from test_init_soil import test_init_sol
+from openalea.soil3ds import IOxls
+from openalea.soil3ds import IOtable
 
 ## import de l'interface sol impulse
-from soil3ds import soil_wrapper as soil_interface #anciennement dans impulse
-#import impulse.soil.soil as soil_interface
+from openalea.soil3ds import soil_wrapper as soil_interface #anciennement dans impulse
+
+###########
+# Soil init
+###########
+def test_init_sol(pattern8 = [[-50.,-50.], [50.,50.]], dz=5., size=[10,10,30]):
+    """ ceation d'un sol test (manip Ashyd)"""
+
+    ## sol
+    #pattern8 = [[-50.,-50.], [50.,50.]]#pattern.8 equivalent (cm)
+    Lsol, largsol = (pattern8[1][0]-pattern8[0][0])/100., (pattern8[1][1]-pattern8[0][1])/100. #m
+    surfsolref = Lsol*largsol #m2
+    dz_sol = dz/100.#0.05 #m
+    ncouches_sol = size[2]#30
+
+    ZESX = 0.30 #m
+    CFES = 3.5#coefficient de forme sans dimension [0.5 - 5.]
+    ACLIMc= 3.#serre
+    ARGIs=22.#lusignan
+    CALCs = 1. #lusignan
+    Norg = 0.92 #gN.kg-1 sol (moyenne Analyse sol)
+    q0 = 0. #(mm de sol)
+    pH= 7.#lusignan
+    Tsol=15. #degresC
+    concrr = 0.02/10000. #kg N.m-2.mm-1 (concentration en N de la pluie)
+
+    ### pour calculs d'humidite
+
+    CN0_30 = 11.97 # moyenne Analyse sol
+    MO0_30 = Norg * CN0_30 * 1.72 #gC.kg-1 sol (1.72: facteur de passage de Corg a MO)
 
 
-try:
-    import soil3ds
-    path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))#local absolute path of soil3ds
-except:
-    path_ = r'C:\devel\soil3ds\soil3ds'#
+    #vecteur d'initialisation
+    vDA = [1.81]+[1.31]*3+[1.37]*13+[1.42]*13 #densite apparente de sol (mesure pesees initial aschyd11)
+    vCN = [CN0_30]*ncouches_sol #maxi 90cm en strates de 5cm
+    vMO = [MO0_30]*ncouches_sol #maxi 90cm en strates de 5cm
+    vARGIs = [ARGIs]*ncouches_sol #maxi 90cm
+    vCALCs = [CALCs]*ncouches_sol
 
+    vNH4 = [2.]*ncouches_sol # #!! kg d'N.ha-1 (entree de STICS)
+    vNO3 = [10.]*ncouches_sol # kg d'N.ha-1 (entree de STICS)
+    HRpinit = [25.5,26.,25.,25.5,26.,26.,26.,26.5,26.5,27.,27.,27.,27.5,27.5,27.5,27.5,27.5,29,29,29,29,29,29,29,29,30,30,30,30,30]#-> mesures ahscyd au jour 195 (140711) -> init sol nu
 
+    vsoilnumbers = [1]+[2]*3+[3]*13+[4]*13 #numeros de sol du profil -> mesures acsyd11
+
+    #recalcule a partir du fichier sol de lusignan
+    par_sol = {'1':{'soil number': '1', 'soil type': 'H5cm - ASCHYD11', 'teta_sat': 0.55, 'teta_fc': 0.479, 'teta_wp': 0.380, 'teta_ad': 0.340,   'WCST': '0.35',   'gamma_theo': '0.07'}}
+    par_sol['2'] = {'soil number': '2', 'soil type': 'H10cm - ASCHYD11', 'teta_sat': 0.55, 'teta_fc': 0.347, 'teta_wp': 0.275, 'teta_ad': 0.248,   'WCST': '0.35',   'gamma_theo': '0.07'}
+    par_sol['3'] = {'soil number': '3', 'soil type': 'H25cm - ASCHYD11', 'teta_sat': 0.55, 'teta_fc': 0.377, 'teta_wp': 0.301, 'teta_ad': 0.248,   'WCST': '0.35',   'gamma_theo': '0.07'}
+    par_sol['4'] = {'soil number': '4', 'soil type': 'H90cm - ASCHYD11', 'teta_sat': 0.55, 'teta_fc': 0.426, 'teta_wp': 0.312, 'teta_ad': 0.248,   'WCST': '0.35',   'gamma_theo': '0.07'}
+
+    #parametre sol complementaires pour l'N
+    par_SN = solN.default_parSN()
+
+    ## soil initialisation
+    S = solN.SoilN(par_sol, par_SN, soil_number = vsoilnumbers, dxyz = [[Lsol/size[0]]*size[0], [largsol/size[1]]*size[1], [dz_sol]*ncouches_sol], vDA=vDA, vCN=vCN,vMO=vMO, vARGIs = vARGIs,vNO3=vNO3,vNH4=vNH4, vCALCs=vCALCs, Tsol=Tsol, obstarac=None, pattern8=pattern8)
+    S.init_asw(HRp_init=HRpinit)
+    return S
 
 ################
 # Options de simulation 
@@ -56,9 +105,7 @@ PLOT_PROPERTY = 'ftsw_t'#'m_NO3'#'root_length' # (-1 pour pas de grille sol)
 ################
 
 
-#path_leg = r'C:\devel\soil3ds\soil3ds\test\inputs'#r'C:\devel\racine vincent'
-path_leg = os.path.join(path_, 'test','inputs')
-sys.path.insert(0, path_leg)
+path_leg = Path("inputs")
 
 path_plante = os.path.join(path_leg,'param_root.xls')
 ongletP = 'sevanskij'#'leo'#'canto'#'formica'#'timbale'#'giga'#'canto'#'kayanne'#
@@ -150,8 +197,8 @@ def initiatisation_soil_default(pattern8, dz, size, stateEV, properties_3ds):
   # lecture parametre N par defaut
   par_SN = solN.default_parSN()
   
-  ## creation d'un objet sol 3ds par defaut (S)
-  S = init_sol_test(pattern8, dz, size)
+  ## create default 3D soil object (S)
+  S = test_init_sol(pattern8, dz, size)
   #print('surfsol',S.surfsolref) #-> c'est bien un objet sol de la bonne surface qui est cree 
   
   #instancie un odjet sol 3D d'interface vide (intsoil) a partir de l'objet sol 3ds (S)
@@ -193,7 +240,7 @@ fichier_sol.close()
 #/* Coefficient de croissance, compris entre 0 et 1 */
 #/* Coefficient multiplicateur de distance inter-ramif  */
 #/* Intensite de la contrainte mecanique */
-#/* Orientation de la contrainte mécanique (O iso, ou 1 vert) */
+#/* Orientation de la contrainte mï¿½canique (O iso, ou 1 vert) */
 
 # to do: passer ces infos dans intsol pour simplifier l'exemple !!
 #print('Sol:', SolV)
@@ -217,55 +264,55 @@ NBCASEMAX=301  #/* Nombre maximal de cases de sol en X, Y et Z */
 
 epsilon=1.0e-10 #/* Petite valeur, proche de 0 */
 epaissHor=50.0  #/* Epaisseur horizons de sol (en mm) */
-longSegNorm=1.9  #/* Longueur habituelle des segments formés (mm) */
-longSegMin=2.0  #/* Longueur minimale des segments formés, quand faible croissance (mm) */
-dureeSansCreation=3 #/* Durée maximale sans création de noeud, quand faible croissance (jour) */
+longSegNorm=1.9  #/* Longueur habituelle des segments formï¿½s (mm) */
+longSegMin=2.0  #/* Longueur minimale des segments formï¿½s, quand faible croissance (mm) */
+dureeSansCreation=3 #/* Durï¿½e maximale sans crï¿½ation de noeud, quand faible croissance (jour) */
 mailleMin=6.0  #/* Valeur de la maille minimale de sol (mm) */
-d1=3.0   #/* Première valeur de distance (mm) */
-d2=30.0  #/* Deuxième valeur de distance (plus grande) (mm) */
+d1=3.0   #/* Premiï¿½re valeur de distance (mm) */
+d2=30.0  #/* Deuxiï¿½me valeur de distance (plus grande) (mm) */
 
 NBbranchement=0
 
 
 
-#// Caractérisation de l'émission des primaires
-P_vitEmissionPrim= ParamP['ER']#13 #/* Vitesse d'émission des primaires (en jour-1) */
+#// Caractï¿½risation de l'ï¿½mission des primaires
+P_vitEmissionPrim= ParamP['ER']#13 #/* Vitesse d'ï¿½mission des primaires (en jour-1) */
 P_nbMaxPrim= ParamP['NBmaxPrim']#200 #/* Nombre maximal de racines primaires */
 
-P_angInitMoyVertPrim=0.#0.7854 #/* Angle d'insertion moyen par rapport à la verticale pour les primaires */
-P_angInitETVertPrim=0.15 #0.55#0.35  #/* écart-type de l'angle d'insertion des primaires */
+P_angInitMoyVertPrim=0.#0.7854 #/* Angle d'insertion moyen par rapport ï¿½ la verticale pour les primaires */
+P_angInitETVertPrim=0.15 #0.55#0.35  #/* ï¿½cart-type de l'angle d'insertion des primaires */
 
-#// Caractérisation de l'émission des tardives
-#P_ageEmissionTard=200.0 #/* âge de commencement de l'émission des racines tardives */
-#P_vitEmissionTard=0 #/* Vitesse d'émission des tardives (en jour-1) */
-#P_dBaseMaxTard=10.0 #/* Distance à la base maximale pour les tardives (mm) */
-#P_propDiamTard=0.70 #/* Proportion du diamètre des tardives (par rapport aux primaires) */
+#// Caractï¿½risation de l'ï¿½mission des tardives
+#P_ageEmissionTard=200.0 #/* ï¿½ge de commencement de l'ï¿½mission des racines tardives */
+#P_vitEmissionTard=0 #/* Vitesse d'ï¿½mission des tardives (en jour-1) */
+#P_dBaseMaxTard=10.0 #/* Distance ï¿½ la base maximale pour les tardives (mm) */
+#P_propDiamTard=0.70 #/* Proportion du diamï¿½tre des tardives (par rapport aux primaires) */
 #P_nbMaxTard=0 #/* Nombre maximal de racines tardives */
 
-#P_angInitMoyVertTard=1.57 #/* Angle d'insertion moyen par rapport à la verticale pour les tardives */
-#P_angInitETVertTard=0.02  #/* écart-type de l'angle d'insertion des tardives */
+#P_angInitMoyVertTard=1.57 #/* Angle d'insertion moyen par rapport ï¿½ la verticale pour les tardives */
+#P_angInitETVertTard=0.02  #/* ï¿½cart-type de l'angle d'insertion des tardives */
 
-#// Probabilité journalière d'arrêt de la croissance
-P_probaMaxArret=1  #/* Probabilité journalière d'arrêt maximale, pour un diamètre nul */
-P_probaEffetDiam=0.00000004  #/* Effet de décroissance de la probabilité, en lien avec diamètre apical (mm-1) */
+#// Probabilitï¿½ journaliï¿½re d'arrï¿½t de la croissance
+P_probaMaxArret=1  #/* Probabilitï¿½ journaliï¿½re d'arrï¿½t maximale, pour un diamï¿½tre nul */
+P_probaEffetDiam=0.00000004  #/* Effet de dï¿½croissance de la probabilitï¿½, en lien avec diamï¿½tre apical (mm-1) */
 
 #// Croissance radiale
 P_coeffCroissRad=0.0 #// coefficient de croissance radiale
 
 #// Allongement (croissance axiale)
-P_diamMin= ParamP['Dmin']*10#0.07  #/* Diamètre minimal en deça duquel il n'y a pas de croissance (mm) */
-P_diamMax= ParamP['Dmax']*10#0.6   #/* Diamètre maximal donné aux racines primaires (mm) */
-P_penteVitDiam=ParamP['ELmax']*10#2.0#30.0 #/* pente de la relation entre vitesse de croissance et diamètre (mm.mm.jour-1) */unite??
+P_diamMin= ParamP['Dmin']*10#0.07  #/* Diamï¿½tre minimal en deï¿½a duquel il n'y a pas de croissance (mm) */
+P_diamMax= ParamP['Dmax']*10#0.6   #/* Diamï¿½tre maximal donnï¿½ aux racines primaires (mm) */
+P_penteVitDiam=ParamP['ELmax']*10#2.0#30.0 #/* pente de la relation entre vitesse de croissance et diamï¿½tre (mm.mm.jour-1) */unite??
 P_SC=1.#0.5  # coefficient de satisfaction en carbone (ratio entre la demande et l offre en biomasse)
 P_tendanceDirTropisme=1  #/* Type de tropisme (0: plagio; -1: geo-; +1: geo+; 2: exo */
-P_intensiteTropisme= ParamP['g_root']*10#0.001199#0.05#0.01 #/* Coefficient multiplié par le diamètre pour chaque racine */
+P_intensiteTropisme= ParamP['g_root']*10#0.001199#0.05#0.01 #/* Coefficient multipliï¿½ par le diamï¿½tre pour chaque racine */
 
 #// Ramification
-P_ageMaturitePointe= ParamP['DistRA']*10/(P_penteVitDiam*(P_diamMax-P_diamMin)) #80 #/* âge de maturité des méristèmes (jours) */
+P_ageMaturitePointe= ParamP['DistRA']*10/(P_penteVitDiam*(P_diamMax-P_diamMin)) #80 #/* ï¿½ge de maturitï¿½ des mï¿½ristï¿½mes (jours) */
 P_distRamif= ParamP['IBD']*10#2.5 #/* distance inter-ramification (mm) */
-P_propDiamRamif= ParamP['DIDm']#0.25 #/* proportion de diamètre des filles par rapport à leur mère */
-P_coeffVarDiamRamif= ParamP['varD']#0.25 #/* coefficient de variation du diamètre des ramifs */
-P_angLat= ParamP['ELV0']*3.14/180.#1.3 #/* angle d'insertion des racines latérales */
+P_propDiamRamif= ParamP['DIDm']#0.25 #/* proportion de diamï¿½tre des filles par rapport ï¿½ leur mï¿½re */
+P_coeffVarDiamRamif= ParamP['varD']#0.25 #/* coefficient de variation du diamï¿½tre des ramifs */
+P_angLat= ParamP['ELV0']*3.14/180.#1.3 #/* angle d'insertion des racines latï¿½rales */
 
 # Variation de diametre
 P_Vmax=0.01
@@ -278,7 +325,7 @@ P_Dmax=ParamP['Dmax']*10#0.8
 #// Mortalite
 RTDmoy = 0.0534# valeur moy des 6 especes (pour test)
 P_RootMasseVolumique= ParamP['RTD']/1000#RTDmoy/1000##(g.mm-3)#0.142 #/* Tissue mass density, ou masse volumique */
-P_penteDureeVieDiamTMD=300.0 #/* pente de la relation durée de vie versus diamètre et TMD */
+P_penteDureeVieDiamTMD=300.0 #/* pente de la relation durï¿½e de vie versus diamï¿½tre et TMD */
 P_TMD = 3000. #150j*20degre
 P_GDs = 3000. #150j*20degre
 
@@ -289,7 +336,7 @@ ordreMax = 4 #GL: ordre max ou representer les racines
 #anisotropisme=0 # en attendant le sol
 
 maille=mailleMin #/* Valeur initialisee de la maille de sol */
-volElemSol=0  #/* Volume élémentaire de sol associé à la maille (mm3) */
+volElemSol=0  #/* Volume ï¿½lï¿½mentaire de sol associï¿½ ï¿½ la maille (mm3) */
 
 
 num_pointe=0
@@ -306,7 +353,7 @@ out = []
 ########################################
 # Log modilf GL
 # 
-# - ajoute un argument Dmax_i aux objets pte et primord -> pour stocker valeur tirée inititale
+# - ajoute un argument Dmax_i aux objets pte et primord -> pour stocker valeur tirï¿½e inititale
 # - utilise Dmax_i comme valeur max de diametre de chaque racine (pas Dmax global)
 # - lecture des parametres dans un fichier externe excell:param_root.xls
 # - ajoute argument ordre de ramification aux objets pte, primord et segment
@@ -395,7 +442,7 @@ def Gravitropisme(vertex,segment,profondeur,elong,init):#age,ordre,Turtle):
     
     cont=float(SolV[Couche(profondeur)][2])
     if SolV[Couche(profondeur)][3]==1:##(oCMecaSol(sol,profondeur)==1)  /* Contrainte anisotrope verticale */
-      ## on est dans le cas ou le sol est composé de nombreux tunnel verticaux de vers de terre qui entraine une orientation assez verticale des racines 
+      ## on est dans le cas ou le sol est composï¿½ de nombreux tunnel verticaux de vers de terre qui entraine une orientation assez verticale des racines 
       teta=15*pi/180
       ang_insertion=random.random()*2*teta-teta
       ang_radial=random.random()*2*pi
@@ -446,12 +493,12 @@ def CroissanceRacine(X,profondeur):
   return (X.diametre - P_diamMin)* dt * P_penteVitDiam * float(SolV[Couche(profondeur)][0])
 
 def tireDiamPointeFille(diametre_pere):
-  ##/* Tire le diamètre d'un méristème de ramification suivant celui du père
-  ##   pour la ramification séquentielle */
+  ##/* Tire le diamï¿½tre d'un mï¿½ristï¿½me de ramification suivant celui du pï¿½re
+  ##   pour la ramification sï¿½quentielle */
   
   moy=diametre_pere*P_propDiamRamif + (P_diamMin*(1.0-P_propDiamRamif))
   et=moy*P_coeffVarDiamRamif
-  diamPFille=10.0  #// initialisation à une forte valeur
+  diamPFille=10.0  #// initialisation ï¿½ une forte valeur
   while (diamPFille>(1.1*diametre_pere)):
      diamPFille=random.normalvariate(moy,et)
   return diamPFille
@@ -645,8 +692,8 @@ class seg:
 #  def __init__(self,croiss,ramif,iCMeca,oCMeca):
 #    self.croiss  #/* Coefficient de croissance, compris entre 0 et 1 */
 #    self.ramif  #/* Coefficient multiplicateur de distance inter-ramif  */
-#    self.iCMeca  #/* Intensité de la contrainte mécanique */
-#    self.oCMeca    #/* Orientation de la contrainte mécanique (O iso, ou 1 vert) */
+#    self.iCMeca  #/* Intensitï¿½ de la contrainte mï¿½canique */
+#    self.oCMeca    #/* Orientation de la contrainte mï¿½canique (O iso, ou 1 vert) */
 
 
 
@@ -660,7 +707,7 @@ def Start():
   S, stateEV, intsoil, par_SN =  initiatisation_soil_default(pattern8, dz, size, stateEV, properties_3ds)
   
   frameDisplay(True)
-  Viewer.frameGL.setBgColor(255,255,255)
+  #Viewer.frameGL.setBgColor(255,255,255)
   #Viewer.camera.setOrthographic() 
   #Viewer.camera.lookAt((-50,0,-20),(0,0,-20))
   timing = t.time()
@@ -799,12 +846,12 @@ def End():
   if opt_plot_fin == 1:
     frameDisplay(True)
     #Viewer.frameGL.setSize(2000,5000)
-    Viewer.frameGL.setBgColor(255,255,255)
+    #Viewer.frameGL.setBgColor(255,255,255)
     #Viewer.camera.setOrthographic() 
     
     #Viewer.camera.lookAt#((7.5/100,-1666./100,-545/100),(384./100,0,-500/100))#((7.5,-1666.,-545),(384.,0,-500))#((-50,0,-20),(0,0,-20))
     outimagepath =  os.path.join(path_leg, ongletP+"_seed"+str(Rseed)+"_"+str(getIterationNb())+".png")
-    Viewer.frameGL.saveImage(outimagepath)
+    #Viewer.frameGL.saveImage(outimagepath)
 
 
 
@@ -920,12 +967,12 @@ pointe(X):
   #  tirage=random.random()
   #  probaArret=P_probaMaxArret*(1-exp(-P_probaEffetDiam*X.age/X.diametre))
   #  if tirage < probaArret:
-  #    X.arretee=True      ### La croissance est arretée
+  #    X.arretee=True      ### La croissance est arretï¿½e
   #  
   
   
   #if X.senile==False and TPS>10 and X.age > (P_penteDureeVieDiamTMD*X.diametre*P_TMD):
-  #  X.senile=True    ### la pointe devient sénile
+  #  X.senile=True    ### la pointe devient sï¿½nile
   
   if X.arretee==False and TPS>10 and X.age > (X.diametre*X.diametre*P_GDs):
     X.arretee=True    ### la pointe arretee

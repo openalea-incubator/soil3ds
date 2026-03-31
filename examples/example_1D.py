@@ -5,22 +5,19 @@
 #############
 
 import os
-import soil3ds
-from soil3ds import soil_moduleN as solN
-from scipy import *
+from openalea import soil3ds
 
-from legume import initialisation # require legume package for 'init_sol_fromLpy' function
-from legume import IOxls
+from openalea.legume import initialisation # require legume package for 'init_sol_fromLpy' function
+from openalea.legume import IOxls
 #from soil3ds import IOxls
 
-path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
-path_leg = os.path.join(path_, 'test', 'inputs')
+# path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))  # path ou trouver les inputs
+path_leg = '../test/inputs'  #os.path.join(path_, 'test', 'inputs')
 
 
 def critN(MS, a=4.8, b=-0.33):
     """ courbe critique de dilution de l'N """
     return min(6.5, a * MS ** b)  # en %
-
 
 ## 1) lecture fichier initialisation
 meteo_path = os.path.join(path_leg, 'meteo_exemple.xls')  # 'meteo_exemple_debugL_gl.xls')#r'H:\devel\grassland\grassland\L-gume\meteo_exemple2.xls'
@@ -116,7 +113,7 @@ for DOY in range(DOY_deb, DOY_fin):
 
     PotN = MSa * critN(MSa) / 100. * 1000  # kg N.ha-1
     demande_N_plt = max(PotN - QN, 0.)  # kg N.ha-1
-    ls_demandeN = [sum(demande_N_plt) / 10000.]  # kg N.surface de sol
+    ls_demandeN = [demande_N_plt / 10000.]  # kg N.surface de sol
 
     # Calcul du bilan hydrique
     ls_transp, evapo_tot, Drainage, stateEV, m_frac_transpi, m_frac_evap, ls_ftsw = S.stepWBmc(
@@ -157,8 +154,6 @@ for DOY in range(DOY_deb, DOY_fin):
 S.CloseWbalance()  # -> equilibre
 S.CloseCbalance()  # -> equilibre
 S.CloseNbalance()  # -> equilibre
-
-
 
 
 

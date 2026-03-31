@@ -4,7 +4,7 @@ import os
 import sys
 
 
-import legume
+import openalea.legume
 path_ = os.path.dirname(os.path.abspath(legume.__file__))  # local absolute path of L-egume
 #path_ = r'C:\devel\l-egume\legume'  # r'C:\devel\grassland'
 
@@ -14,15 +14,15 @@ sys.path.insert(0, path_)
 
 import numpy as np
 
-import IOxls
-import IOtable
-import run_legume_usm as runl
-import initialisation as initial
-import RootDistrib as rtd
+from openalea.soil3ds import IOxls
+from openalea.soil3ds import IOtable
+import openalea.legume.run_legume_usm as runl
+import openalea.legume.initialisation as initial
+import openalea.legume.RootDistrib as rtd
 
 
 #import soil3ds
-from soil3ds import soil_moduleN as solN
+from openalea.soil3ds import soil_moduleN as solN
 
 
 
