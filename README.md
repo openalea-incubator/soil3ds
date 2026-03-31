@@ -31,7 +31,7 @@ This will create a conda environment with dependencies installed and install soi
 
 To run a simulation example :
 
-* 1. place yourself in folder `examples`
+  1. place yourself in folder `examples`
   2. run from the console:
 		```bash
         python example_3D.py
