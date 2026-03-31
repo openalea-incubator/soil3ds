@@ -18,7 +18,7 @@ First, **Conda** needs to be installed, see instruction on [openaleala documenta
 #### for user
 Creating a new conda environment with soil3ds and its dependencies installed
 ```bash
-mamba create -n soil3ds -c openalea3/label/dev -c openalea3 -c conda-forge openalea.soil3ds
+mamba create -n soil3ds -c openalea3 -c openalea3 -c conda-forge openalea.soil3ds
 ```
 
 #### for developer
