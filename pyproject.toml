@@ -49,6 +49,7 @@ classifiers = [
 # If conda name is different, please do not declare the pip name, and declare conda name in the next section
 dependencies = [
     "numpy",
+    "xlrd",
 ]
 
 [project.optional-dependencies]
