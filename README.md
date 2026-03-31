@@ -1,6 +1,4 @@
-====================================
-README for '3DS soil model' (soil3ds)
-====================================
+# 3DS soil model (soil3ds)
 
 This is '3DS soil model' (soil3ds), a 3D Soil model of soil for water and N balances adapted from the STICS soil module.
 
