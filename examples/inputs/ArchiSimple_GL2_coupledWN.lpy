@@ -25,14 +25,6 @@ from openalea.soil3ds import IOtable
 
 ## import de l'interface sol impulse
 from openalea.soil3ds import soil_wrapper as soil_interface #anciennement dans impulse
-#import impulse.soil.soil as soil_interface
-
-
-try:
-    import openalea.soil3ds
-    path_ = os.path.dirname(os.path.abspath(soil3ds.__file__))#local absolute path of soil3ds
-except:
-    path_ = r'C:\devel\soil3ds\soil3ds'#
 
 ###########
 # Soil init
@@ -112,9 +104,7 @@ PLOT_PROPERTY = 'ftsw_t'#'m_NO3'#'root_length' # (-1 pour pas de grille sol)
 ################
 
 
-#path_leg = r'C:\devel\soil3ds\soil3ds\test\inputs'#r'C:\devel\racine vincent'
-path_leg = 'inputs' #os.path.join(path_, 'test','inputs')
-sys.path.insert(0, path_leg)
+path_leg = 'inputs'
 
 path_plante = os.path.join(path_leg,'param_root.xls')
 ongletP = 'sevanskij'#'leo'#'canto'#'formica'#'timbale'#'giga'#'canto'#'kayanne'#
