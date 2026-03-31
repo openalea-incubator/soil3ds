@@ -7,8 +7,7 @@ import os
 
 from numpy import mean
 
-from openalea.legume import IOxls
-
+from openalea.soil3ds import IOxls
 from openalea.soil3ds import soil_moduleW as solW
 from openalea.soil3ds import soil_moduleN as solN
 
