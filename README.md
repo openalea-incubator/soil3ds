@@ -39,7 +39,7 @@ To run a simulation example :
 
 ## Contact
 
-For any question, send an email to <gaetan.louarn@inrae.fr>.
+For further assistance, you can reach out to the development team creating an [issue on github](https://github.com/openalea-incubator/soil3ds/issues)
 
 ## Authors
 
