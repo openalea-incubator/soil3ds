@@ -81,6 +81,7 @@ channels = [
 ]
 dependencies = [
     "matplotlib-base", # mandatory for pgl.PglMaterialMap in soil_wrapper
+    "openalea.plantgl", # mandatory for pgl.PglMaterialMap in soil_wrapper
 ]
 
 [project.urls]
