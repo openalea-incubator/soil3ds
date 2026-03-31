@@ -50,6 +50,7 @@ classifiers = [
 dependencies = [
     "numpy",
     "xlrd",
+    "pandas",
 ]
 
 [project.optional-dependencies]
